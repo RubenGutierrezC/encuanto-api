@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'https://deno.land/x/denodb/mod.ts';
+import { HistoryModel } from './history.ts';
 
 export class ProviderModel extends Model {
 
@@ -18,4 +19,8 @@ export class ProviderModel extends Model {
         },
         logo: DataTypes.STRING
     };
+
+    static histories() {
+        return this.hasMany(HistoryModel);
+    }
 }

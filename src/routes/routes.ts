@@ -18,11 +18,7 @@ const router = new Router();
 
 router.get('/providers', async ({ response }: { response: any }) => {
   try {
-    
-    console.log('entrando en peticion')
     const data = await ProviderModel.select('*').all();
-
-    console.log(data)
 
     response.body = JSON.stringify(data)
 
