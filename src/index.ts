@@ -1,9 +1,10 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
-import router from './routes/routes.ts'
+import './services/cron.ts'
 
 const app = new Application();
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use((ctx) => {
+    ctx.response.body = "deno app";
+});
 
-await app.listen({ port: 8000 });
+await app.listen({ port: 4050 });
