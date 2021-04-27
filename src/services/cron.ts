@@ -4,6 +4,6 @@ import { getAirTMPrice } from './getAirTIMInfo.ts';
 
 cron('*/30 * * * * *', async () => {
     console.log('request apis...')
-    await getDolarDotayPrice()
-    await getAirTMPrice()
+    // await getDolarDotayPrice()
+    // await getAirTMPrice()
 });

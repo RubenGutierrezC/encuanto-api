@@ -1,14 +1,51 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import client from "../db.ts";
+import { HistoryModel } from '../models/history.ts';
+import { providers } from '../utils/defaultProviders.ts';
+import { ProviderModel } from '../models/provider.ts';
 
 const router = new Router();
 
 
-router.get('/prices', async ({ response }: { response: any }) => {
+// router.get('/prices', async ({ response }: { response: any }) => {
+//   try {
+//     const data = await HistoryModel.select('id').find("5")
+//     response.body = data
+//   } catch (error) {
+//     console.log(error)
+//     response.body = error
+//   }
+// })
+
+router.get('/providers', async ({ response }: { response: any }) => {
   try {
-    const data = await client.queryObject("select * from proveedor")
-    response.body = data.rows
+    
+    console.log('entrando en peticion')
+    const data = await ProviderModel.select('*').all();
+
+    console.log(data)
+
+    response.body = JSON.stringify(data)
+
   } catch (error) {
+    console.log(error)
+    response.body = error
+  }
+})
+
+router.get('/initdb', async ({ response }: { response: any }) => {
+  try {
+    
+    for (const provider of providers) {
+      await ProviderModel.create({
+        name: provider.nombre,
+        logo: provider.logo
+      })
+    }
+
+    response.body = 'created'
+
+  } catch (error) {
+    console.log(error)
     response.body = error
   }
 })

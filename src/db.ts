@@ -1,13 +1,11 @@
-import { Client } from "https://deno.land/x/postgres/mod.ts";
+import { Database, PostgresConnector } from 'https://deno.land/x/denodb/mod.ts';
 
-const client = new Client({
-  hostname: "127.0.0.1",
+const connector = new PostgresConnector({
+  host: 'localhost',
   port: 5432,
-  user: "admintest",
-  database: "rates",
+  username: "admintest",
   password: "123456",
+  database: "rates",
 });
 
-await client.connect();
-
-export default client;
+export const db = new Database({ connector, debug: true })
