@@ -13,6 +13,10 @@ export const getDolarDotayPrice = async () => {
         const response: dolarTodayApi = await request.json()
         console.log('precio dolar today', response.USD.promedio)
         console.log('precio BCV', response.USD.promedio_real)
+        return {
+            dolarToday: response.USD.promedio,
+            BCV: response.USD.promedio_real
+        }
     } catch (error) {
         console.log(error)
     }

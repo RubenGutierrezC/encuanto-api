@@ -1,20 +1,21 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { HistoryModel } from '../models/history.ts';
 import { providers } from '../utils/defaultProviders.ts';
 import { ProviderModel } from '../models/provider.ts';
+import { HistoryModel } from '../models/history.ts';
 
 const router = new Router();
 
 
-// router.get('/prices', async ({ response }: { response: any }) => {
-//   try {
-//     const data = await HistoryModel.select('id').find("5")
-//     response.body = data
-//   } catch (error) {
-//     console.log(error)
-//     response.body = error
-//   }
-// })
+router.get('/history', async ({ response }: { response: any }) => {
+  try {
+    const data = await HistoryModel.select('*').groupBy('dataStamp').groupBy('id').all();
+    console.log(data)
+    response.body = data
+  } catch (error) {
+    console.log(error)
+    response.body = error
+  }
+})
 
 router.get('/providers', async ({ response }: { response: any }) => {
   try {

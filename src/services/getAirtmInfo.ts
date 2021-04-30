@@ -11,8 +11,9 @@ export const getAirtmPrice = async () => {
         const precioDolar: string = doc.querySelector('tbody')?.children[2]?.children[5]?.textContent;
         const newPrice = precioDolar.replaceAll('.','').replace(',', '.')
         const parsedPrecio = parseFloat(newPrice)
-        console.log(parsedPrecio)
+        console.log('airtm', parsedPrecio)
 
+        return parsedPrecio
 
     } catch (error) {
         console.log(error)

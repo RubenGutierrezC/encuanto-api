@@ -14,8 +14,14 @@ export class HistoryModel extends Model {
             unique: true
         },
         amount: DataTypes.FLOAT,
-        log: DataTypes.STRING,
-        data: DataTypes.STRING
+        dateString: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        dataStamp: {
+            type: DataTypes.FLOAT,
+            unique: true
+        }
     };
 
     static provider() {

@@ -15,7 +15,7 @@ export class ProviderModel extends Model {
         },
         name: {
             type: DataTypes.STRING,
-            unique: true
+            unique: false
         },
         logo: DataTypes.STRING
     };

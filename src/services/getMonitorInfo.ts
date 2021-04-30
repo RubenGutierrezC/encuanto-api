@@ -12,7 +12,8 @@ export const getMonitorPrice = async () => {
     const onlyNumber = precioDolar.split(" Bs.")[0]
     const parsedAmount = parseFloat(onlyNumber.replaceAll(" ", ""))
 
-    console.log(parsedAmount)
+    console.log('monitor', parsedAmount)
+    return parsedAmount
 
   } catch (error) {
     console.log(error);
