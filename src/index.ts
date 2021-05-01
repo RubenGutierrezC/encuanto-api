@@ -6,7 +6,7 @@ import { db } from './db.ts'
 import router from './routes/routes.ts'
 import { HistoryModel } from './models/history.ts';
 import { ProviderModel } from './models/provider.ts';
-
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 Relationships.belongsTo(HistoryModel, ProviderModel);
 db.link([ProviderModel, HistoryModel])
@@ -14,9 +14,9 @@ db.link([ProviderModel, HistoryModel])
 
 
 const app = new Application();
-
+app.use(oakCors()); // Enable CORS for All Routes
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-
+console.log('server listen on port 4050')
 await app.listen({ port: 4050 })

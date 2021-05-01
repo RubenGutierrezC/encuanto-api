@@ -2,6 +2,7 @@ import { Router } from "https://deno.land/x/oak/mod.ts";
 import { providers } from '../utils/defaultProviders.ts';
 import { ProviderModel } from '../models/provider.ts';
 import { HistoryModel } from '../models/history.ts';
+import { returnProviderById } from '../utils/defaultProviders.ts';
 
 const router = new Router();
 
@@ -13,11 +14,13 @@ interface HistoryDTO {
   timeStamp: string
 }
 
+
+
+
 router.get('/history', async ({ response }: { response: any }) => {
   try {
     const data: any[] = await HistoryModel.select('*').groupBy('providermodelId').groupBy('id').orderBy('providermodelId').all();
 
-    let responseArray = []
 
     let labels: string[] = [];
     let datasets: any[] = []
@@ -37,11 +40,14 @@ router.get('/history', async ({ response }: { response: any }) => {
         if (actualProviderId != item.providermodelId) {
           console.log('entro if')
           actualProviderId = item.providermodelId
+
+          const getProvider = returnProviderById(item.providermodelId)
+
           datasets.push({
             id: item.providermodelId,
-            label: item.providermodelId,
+            label: getProvider.nombre,
             data: [item.amount],
-            borderColor: 'rgba(1,1,1)',
+            borderColor: getProvider.color,
             borderWidth: 1
           })
         } else {
