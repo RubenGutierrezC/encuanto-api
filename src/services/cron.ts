@@ -4,7 +4,7 @@ import { getDolarDotayPrice } from './getDolarTodayInfo.ts';
 import { getMonitorPrice } from './getMonitorInfo.ts';
 import { saveHistory } from '../utils/saveHistoryToDb.ts';
 
-cron('* 40 * * * *', async () => {
+cron('1 0 0 1 */1 *', async () => {
 
     const { timeStamp, formatedDate } = getFormatedDate()
     
