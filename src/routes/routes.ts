@@ -5,12 +5,60 @@ import { HistoryModel } from '../models/history.ts';
 
 const router = new Router();
 
+interface HistoryDTO {
+  providermodelId: string
+  dateString: string
+  amount: string
+  dataStamp: string
+  timeStamp: string
+}
 
 router.get('/history', async ({ response }: { response: any }) => {
   try {
-    const data = await HistoryModel.select('*').groupBy('dataStamp').groupBy('id').all();
-    console.log(data)
-    response.body = data
+    const data: any[] = await HistoryModel.select('*').groupBy('providermodelId').groupBy('id').orderBy('providermodelId').all();
+
+    let responseArray = []
+
+    let labels: string[] = [];
+    let datasets: any[] = []
+
+    if (data.length > 0) {
+
+      let actualProviderId = 0
+      const firstProvider = data[0].providermodelId
+
+      for (const item of data) {
+        console.log(item.providermodelId)
+        console.log('compare: ', actualProviderId)
+        if (item.providermodelId === firstProvider) {
+          labels.push(item.dateString)
+        }
+  
+        if (actualProviderId != item.providermodelId) {
+          console.log('entro if')
+          actualProviderId = item.providermodelId
+          datasets.push({
+            id: item.providermodelId,
+            label: item.providermodelId,
+            data: [item.amount],
+            borderColor: 'rgba(1,1,1)',
+            borderWidth: 1
+          })
+        } else {
+          console.log('entro else')
+          console.log(datasets[item.providermodelId]?.data)
+          datasets[item.providermodelId - 1]?.data?.push(item.amount)
+        }
+
+          
+      }
+    }
+
+    response.body = {
+      labels,
+      datasets
+    }
+
   } catch (error) {
     console.log(error)
     response.body = error
